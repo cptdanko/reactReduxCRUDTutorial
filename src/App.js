@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Accordion from "./Accordion";
+import Form from "./form";
+import Modal from "./components/modal";
+import { dataStore } from "./reduxStore";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    let d = dataStore.getState();
+    const [show, setShow] = useState(false);
+    const [data, setData] = useState(d);
+
+    dataStore.subscribe(() => {
+        setData(dataStore.getState());
+    });
+
+    function showModal() {
+        setShow(!show);
+    };
+    
+    return (
+        <div>
+            <h1> React Accordion Demo</h1>
+            <div className="accordion">
+                {data.map(({title, content}) => (
+                    <Accordion id={title} title={title} content={content} />
+                ))}
+                <Form />
+
+                <div>
+                    <button onClose={showModal} onClick={showModal}>Show Modal</button>
+                </div>
+                
+                <Modal show={show} onClose={showModal} />
+                <hr />
+            </div>
+        </div>
+    )
+};
 
 export default App;
