@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Accordion from "./Accordion";
-import Form from "./form";
 import Modal from "./components/modal";
 import { dataStore } from "./reduxStore";
 
@@ -13,24 +12,23 @@ const App = () => {
         setData(dataStore.getState());
     });
 
-    function showModal() {
+    function addEntryForm() {
         setShow(!show);
     };
     
     return (
         <div>
-            <h1> React Accordion Demo</h1>
+            <h1> React Accordion/Redux Store Demo</h1>
             <div className="accordion">
                 {data.map(({title, content}) => (
                     <Accordion id={title} title={title} content={content} />
                 ))}
-                <Form />
 
-                <div>
-                    <button onClose={showModal} onClick={showModal}>Show Modal</button>
+                <div className="addFormBtnContainer">
+                    <button className="button" onClose={addEntryForm} onClick={addEntryForm}>Add Entry</button>
                 </div>
                 
-                <Modal show={show} onClose={showModal} />
+                <Modal show={show} onClose={addEntryForm} />
                 <hr />
             </div>
         </div>
