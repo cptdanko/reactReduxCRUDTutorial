@@ -7,12 +7,13 @@ import { createStore } from "@reduxjs/toolkit";
  * @returns 
  */
 const accordionReducer = (state = [], action) => {
-    if(localStorage.getItem("data").length > 0) {
+    if(localStorage.getItem("data") !== null 
+    && localStorage.getItem("data").length > 0) {
         state = JSON.parse(localStorage.getItem("data"));
     }
     if(action.type = "ADD" && action.payload) {
         state = [];
-        if(localStorage.getItem("data").length > 0) {
+        if(localStorage.getItem("data")) {
             state = JSON.parse(localStorage.getItem("data"));
         }
         state.push(action.payload);
